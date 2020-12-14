@@ -3,6 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const CopyPlugin = require("copy-webpack-plugin");
+
+
+const VueLoaderPlugin =require('vue-loader/lib/plugin')
+
+
 const path= require('path')
 module.exports={
     entry: './src/index.js',
@@ -50,8 +56,14 @@ module.exports={
         },
         {
             test: /.html$/,
-            use: 'html-withimg-loader'
-        }
+            use: 'html-withimg-loader',
+            exclude: /node_modules/
+        },
+        {
+            test: /\.vue$/,
+            use: ['vue-loader'],
+            exclude: /node_modules/
+          },
         ]
       },
       devServer: {
@@ -77,6 +89,13 @@ module.exports={
             // hash: true //是否加上hash，默认是 false
         }) ,
          //不需要传参数喔，它可以找到 outputPath
-         new CleanWebpackPlugin()     
+         new CleanWebpackPlugin() ,
+
+         new VueLoaderPlugin(),
+         new CopyPlugin({
+           patterns: [
+               {  from:path.resolve(__dirname,'static'),  
+                 to:path.resolve(__dirname,'dist','static'), }]
+           })
     ]  
 }

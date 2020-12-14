@@ -1,14 +1,12 @@
 //index.js
 import './index.scss'
-class Animal {
-    constructor(name) {
-        this.name = name;
-    }
-    getName() {
-        return this.name;
-    }
-}
+import Vue from 'vue'
+import App from '../public/App.vue'
 
-const dog = new Animal('dog');
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+
 
 console.log('indexs');
